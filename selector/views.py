@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+from django.shortcuts import render
 from django.template import loader
 from .models import Bet
 
@@ -11,5 +12,11 @@ def index(request):
   return HttpResponse(template.render(context, request))
 
 def bet(request, bet_id):
-  bet = Bet.objects.get(id=bet_id)
-  return HttpResponse(f'You\'re looking at Bet #{bet_id}<br />{bet}')
+  try:
+    bet = Bet.objects.get(id=bet_id)
+  except Bet.DoesNotExist:
+    raise Http404(f'Bet #{bet_id} does not exist')
+  return render(
+    request,
+    'selector/detail.html',
+    {'bet': bet})
