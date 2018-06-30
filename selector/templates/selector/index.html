@@ -1,0 +1,13 @@
+{% if bet_list %}
+  <ul>
+    {% for bet in bet_list %}
+      <li>
+        <a href='/selector/{{ bet.id }}'>
+          {{ bet }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No bets are available</p>
+{% endif %}
