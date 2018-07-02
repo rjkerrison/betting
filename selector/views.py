@@ -1,6 +1,7 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from django.template import loader
+from django.core import serializers
 from .models import Bet
 
 def index(request):
@@ -20,3 +21,12 @@ def bet(request, bet_id):
     request,
     'selector/detail.html',
     {'bet': bet})
+
+def bet_json(request, bet_id):
+  try:
+    bet = Bet.objects.get(id=bet_id)
+  except Bet.DoesNotExist:
+    raise Http404(f'Bet #{bet_id} does not exist')
+  return HttpResponse(
+    serializers.serialize('json', [bet,])
+  )
