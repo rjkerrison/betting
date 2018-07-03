@@ -2,7 +2,7 @@
   <ul>
     {% for bet in bet_list %}
       <li>
-        <a href='/selector/{{ bet.id }}'>
+        <a href="{% url 'bet' bet.id %}">
           {{ bet }}
         </a>
       </li>
